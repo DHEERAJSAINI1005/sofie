@@ -55,4 +55,21 @@ class CompanyRepository implements CompanyRepositoryInterface {
             ];
         }
     }
+
+    public function getData($id) {
+        try {
+            $data = Company::find($id);
+
+            return [
+                'success' => true,
+                'data' => $data,
+                'message' => "Get mentor details successfully",
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
 }
