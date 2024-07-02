@@ -53,4 +53,16 @@ Route::name('landing.')->group(function() {
     Route::get('/account-setting', [LandingController::class, 'accountSetting'])->name('accountSetting'); 
 });
 
+$roles = ['admin', 'mentor','company'];
+
+foreach ($roles as $role) {
+    Route::prefix($role)->name($role.'.')->middleware(['auth', 'role:'.$role])->group(function () {
+
+        Route::prefix('mentor')->name('mentor.')->group(function(){
+            Route::get('/', [MentorController::class, 'index'])->name('index');
+            Route::get('/create', [MentorController::class, 'create'])->name('create');
+        }); 
+});
+}
+
 require __DIR__.'/auth.php';

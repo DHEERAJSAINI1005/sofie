@@ -7,6 +7,13 @@ use Inertia\Inertia;
 
 class LandingController extends Controller
 {
+    private $mentorRepository, $companyRepository;
+
+    public function __construct(MentorRepository $mentorRepository, CompanyRepository $companyRepository){
+        $this->mentorRepository = $mentorRepository;
+        $this->companyRepository = $companyRepository;
+    }
+
     //
     public function home() {
         return Inertia::render('Landing/Home/View',[]);
@@ -22,7 +29,11 @@ class LandingController extends Controller
     }
 
     public function signup() {
-        return Inertia::render('Landing/SignUp/View',[]);
+        $data = $request->only(['name', 'email', 'phone', 'username', 'password', 'qualifications', 'industry_sector',
+        'mentored_compnay','functional_area','hear_about_us','number_of_companies','additional_information']);
+        return Inertia::render('Landing/SignUp/View', [
+            "formData" => $data
+        ]);
     }
 
     public function companyDetails() {
