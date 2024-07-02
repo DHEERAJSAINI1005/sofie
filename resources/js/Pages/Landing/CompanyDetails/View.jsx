@@ -20,7 +20,6 @@ function CompanyDetail() {
     const [validationErrors, setValidationErrors] = useState({});
     const [passwordError, setpasswordError] = useState(false);
 
-
     const handleChange = (key, value) => {
         const updatedData = {
         ...data,
