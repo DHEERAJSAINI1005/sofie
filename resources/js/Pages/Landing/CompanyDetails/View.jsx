@@ -22,6 +22,7 @@ function CompanyDetail() {
 
     const handleChange = (key, value) => {
         console.log("test");
+        console.log("test");
         const updatedData = {
         ...data,
         [key]: value,
