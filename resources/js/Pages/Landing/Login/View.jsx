@@ -61,6 +61,7 @@ function Login() {
       setValidationErrors(validationErrors);
     } else {
       console.log('data', value)
+      post(route('login'));
     }
   };
 

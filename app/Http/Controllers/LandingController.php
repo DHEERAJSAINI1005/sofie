@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repository\{MentorRepository, CompanyRepository};
 use Inertia\Inertia;
 
 class LandingController extends Controller

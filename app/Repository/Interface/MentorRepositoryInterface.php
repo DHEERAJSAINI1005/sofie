@@ -9,5 +9,5 @@ Interface MentorRepositoryInterface {
      * @return array
     */
     public function getList();
-    public function saveData(Request $data);
+    // public function saveData(Request $data);
 }

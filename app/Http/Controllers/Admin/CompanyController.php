@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Mentor;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use App\Repository\CompanyRepository;
 use Illuminate\Support\Facades\Redirect;
 
 
-class ProjectController extends Controller
+class CompanyController extends Controller
 {
     //
     private $companyRepository;
@@ -20,6 +20,14 @@ class ProjectController extends Controller
 
     public function get($id) {
         $response = $this->companyRepository->get($id);
+        return Inertia::render('Landing/Company/View',[
+            'data' => $response['data'],
+            ]
+        );
+    }
+
+    public function store(Request $request){
+        $response = $this->companyRepository->saveData($request);
         return Inertia::render('Landing/Company/View',[
             'data' => $response['data'],
             ]

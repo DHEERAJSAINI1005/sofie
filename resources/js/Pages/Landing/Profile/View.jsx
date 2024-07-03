@@ -8,6 +8,7 @@ import { Avatar, FormControl, MenuItem,Button, Radio, RadioGroup, Select, TextFi
 import "./style.scss"
 import Constants from '../Constants';
 import { useState } from 'react';
+import { Inertia } from '@inertiajs/inertia';
 
 const HeadingBox = styled('div')(() => ({
   border: '1px solid black',
@@ -60,7 +61,11 @@ function Profile() {
         });
         setValidationErrors(validationErrors);
         } else {
-        console.log('data', value)
+            Inertia.post(route('mentor.user.store'), value, {
+                onError: (errors) => {
+                    setValidationErrors(errors);
+                },
+            });
         }
     };
 

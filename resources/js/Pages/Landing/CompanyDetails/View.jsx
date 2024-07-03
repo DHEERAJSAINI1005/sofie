@@ -74,7 +74,11 @@ function CompanyDetail() {
         if (Object.keys(validationErrors).length > 0) {
           setValidationErrors(validationErrors);
         } else {
-          console.log('Data', data);
+          post(route('company.details.store'), data, {
+            onError: (errors) => {
+                setValidationErrors(errors);
+            },
+        });
         }
       };
 

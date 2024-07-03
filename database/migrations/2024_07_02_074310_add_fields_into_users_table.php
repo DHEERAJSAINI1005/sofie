@@ -15,10 +15,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('role')->nullable();
             $table->string('username')->nullable();
-            $table->string('password')->nullable();
             $table->string('qualifications')->nullable();
             $table->string('industry_sector')->nullable();
-            $table->string('mentored_compnay')->nullable();
+            $table->string('mentored_company')->nullable();
             $table->string('functional_area')->nullable();
             $table->string('hear_about_us')->nullable();
             $table->string('number_of_companies')->nullable();

@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Admin\CompanyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +33,14 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', [LandingController::class, 'dashBoard'])->name('dashboard');
 });
 
 
@@ -53,16 +60,20 @@ Route::name('landing.')->group(function() {
     Route::get('/account-setting', [LandingController::class, 'accountSetting'])->name('accountSetting'); 
 });
 
-$roles = ['admin', 'mentor','company'];
-
-foreach ($roles as $role) {
-    Route::prefix($role)->name($role.'.')->middleware(['auth', 'role:'.$role])->group(function () {
-
-        Route::prefix('mentor')->name('mentor.')->group(function(){
-            Route::get('/', [MentorController::class, 'index'])->name('index');
-            Route::get('/create', [MentorController::class, 'create'])->name('create');
-        }); 
+Route::prefix('mentor')->name('mentor.')->group(function(){
+    Route::prefix('user')->name('user.')->group(function(){
+        Route::get('/get', [RegisteredUserController::class, 'index'])->name('index');
+        Route::post('/store', [RegisteredUserController::class, 'store'])->name('store');
+    });
 });
-}
+
+Route::prefix('company')->name('company.')->group(function(){
+    Route::prefix('details')->name('details.')->group(function(){
+        Route::get('/get', [CompanyController::class, 'index'])->name('index');
+        Route::post('/store', [CompanyController::class, 'store'])->name('store');
+    });
+});
+
+
 
 require __DIR__.'/auth.php';
